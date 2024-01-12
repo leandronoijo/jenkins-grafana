@@ -1,0 +1,40 @@
+version: '3'
+services:
+  grafana:
+    image: grafana/grafana:9.5.15-ubuntu
+    environment:
+      - INFLUXDB_PASS=${INFLUXDB_PASS}
+      - INFLUXDB_USER=${INFLUXDB_USER}
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - 3000:3000
+    networks:
+      - monitoring
+
+  jenkins:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+      args:
+        - INFLUXDB_PASS=${INFLUXDB_PASS}
+        - INFLUXDB_USER=${INFLUXDB_USER}
+    volumes:
+      - ./jenkins/jenkins.yaml:/var/jenkins_home/casc_configs/jenkins.yaml
+    environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs
+    ports:
+      - 8080:8080
+    networks:
+      - monitoring
+
+  influxdb:
+    image: influxdb:1.8
+    environment:
+      - INFLUXDB_DB=jenkins 
+      - INFLUXDB_USER_PASSWORD=${INFLUXDB_PASS}
+    networks:
+      - monitoring
+
+networks:
+  monitoring:

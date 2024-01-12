@@ -1,0 +1,21 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          id: "influxdb-logger-credentials"
+          password: "${INFLUXDB_PASS}"
+          scope: SYSTEM
+          username: "${INFLUXDB_USER}"
+unclassified:
+  influxDbGlobalConfig:
+    targets:
+    - credentialsId: "influxdb-logger-credentials"
+      database: "jenkins"
+      description: "Logger"
+      exposeExceptions: true
+      globalListener: true
+      jobScheduledTimeAsPointsTimestamp: false
+      retentionPolicy: "autogen"
+      url: "http://influxdb:8086"
+      usingJenkinsProxy: false

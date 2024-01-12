@@ -1,0 +1,258 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 1,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "jenkins-logs-datasource"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "project_name"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Job"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "build_time"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Duration"
+                },
+                {
+                  "id": "unit",
+                  "value": "µs"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "build_result"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Result"
+                },
+                {
+                  "id": "mappings",
+                  "value": [
+                    {
+                      "options": {
+                        "SUCCESS": {
+                          "color": "dark-green",
+                          "index": 0,
+                          "text": "SUCCESS"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ]
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-red",
+                    "mode": "fixed"
+                  }
+                },
+                {
+                  "id": "custom.cellOptions",
+                  "value": {
+                    "type": "color-background"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "build_number"
+              },
+              "properties": [
+                {
+                  "id": "links",
+                  "value": [
+                    {
+                      "targetBlank": true,
+                      "title": "Show Logs",
+                      "url": "http://localhost:8080/job/${__data.fields.project_path}/${__value.text}/console"
+                    }
+                  ]
+                },
+                {
+                  "id": "displayName",
+                  "value": "Logs"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "project_path"
+              },
+              "properties": [
+                {
+                  "id": "custom.hidden",
+                  "value": true
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 14,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "9.5.15",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "P3E822ABEDB8AE603"
+            },
+            "groupBy": [],
+            "key": "Q-74d7c32d-69db-411f-ac33-c0fa30fbcb44-0",
+            "measurement": "jenkins_data",
+            "orderByTime": "DESC",
+            "policy": "autogen",
+            "refId": "A",
+            "resultFormat": "table",
+            "select": [
+              [
+                {
+                  "params": [
+                    "project_name"
+                  ],
+                  "type": "field"
+                }
+              ],
+              [
+                {
+                  "params": [
+                    "project_path"
+                  ],
+                  "type": "field"
+                }
+              ],
+              [
+                {
+                  "params": [
+                    "build_number"
+                  ],
+                  "type": "field"
+                }
+              ],
+              [
+                {
+                  "params": [
+                    "build_time"
+                  ],
+                  "type": "field"
+                }
+              ],
+              [
+                {
+                  "params": [
+                    "build_result"
+                  ],
+                  "type": "field"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "title": "All Jobs",
+        "type": "table"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Jobs Status",
+    "uid": "d6988a8d-4f61-42e4-911c-88a5282a0208",
+    "version": 4,
+    "weekStart": ""
+  }
