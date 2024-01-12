@@ -31,7 +31,8 @@ services:
   influxdb:
     image: influxdb:1.8
     environment:
-      - INFLUXDB_DB=jenkins 
+      - INFLUXDB_DB=jenkins
+      - INFLUXDB_USER=${INFLUXDB_USER} 
       - INFLUXDB_USER_PASSWORD=${INFLUXDB_PASS}
     networks:
       - monitoring
